@@ -5,7 +5,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-from pkgBackEnd.scraper.get_url import get_url_content
+from pkgBackEnd.scraper.get_url import UrlContentFetcher
 
 """
 def setup_webdriver():
@@ -74,7 +74,12 @@ if __name__ == "__main__":
     manager = WebDriverManager(headless=True, disable_gpu=True, page_load_strategy='eager')
     driver = manager.create_chromedriver()
 
-    get_url_content(driver)
+    url_fetcher = UrlContentFetcher()
+    url_fetcher.set_webdriver(driver)
+    url_fetcher.get_page_content()
+    url_fetcher.print_page_content()
+
+
 
 
 

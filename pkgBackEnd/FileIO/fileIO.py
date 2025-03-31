@@ -1,4 +1,5 @@
 
+#error check these functions later....
 def url_from_file():
     filepath = "../../SPOT/API_ENDPOINT.txt"
     with open(filepath) as file:
