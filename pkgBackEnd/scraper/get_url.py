@@ -1,6 +1,7 @@
 import logging
+import pprint
 
-from pkgBackEnd.FileIO import fileIO
+from pkgBackEnd.FileIO import get_url_from_file
 
 """
 def url():
@@ -44,7 +45,7 @@ class UrlContentFetcher:
 
     def print_page_content(self):
         content = self.get_page_content()
-        print(content)
+        pprint.pprint(content)
 
 
 
