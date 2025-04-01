@@ -1,6 +1,7 @@
 
 #error check these functions later....
-def url_from_file():
+
+def load_base_url():
     try:
         API_filepath = "../../SPOT/API_ENDPOINT.txt"
         with open(API_filepath) as file:
@@ -11,4 +12,4 @@ def url_from_file():
 
 
 if __name__ == "__main__":
-    print(url_from_file())
+    print(load_base_url())
