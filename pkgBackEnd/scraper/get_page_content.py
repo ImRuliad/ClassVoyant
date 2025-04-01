@@ -22,12 +22,18 @@ class PageFetcher:
             logging.error(f"Error fetching content from {self.url_to_fetch}: {e}")
             raise
 
+    def load_sem_page(self, semester):
+        base_url = self.url_to_fetch
+        semester_url = base_url + semester
+
+        try:
+            self.webdriver.get(semester_url)
+            return self.webdriver.page_source
+        except Exception as e:
+            logging.error(f"Error fetching content from {semester_url} {e}")
+            raise
 
 
-
-
-
-
-    def print_page_content(self):
-        content = self.load_page()
+    def print_page_content(self, semester):
+        content = self.load_sem_page(semester)
         pprint(content)

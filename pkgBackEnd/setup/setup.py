@@ -10,7 +10,7 @@ from pkgBackEnd.scraper.get_url import UrlFetcher
 
 
 class WebDriverManager:
-    def __init__(self, headless=True, disable_gpu=True, page_load_strategy='eager'):
+    def __init__(self, headless, disable_gpu, page_load_strategy):
         self.headless = headless
         self.disable_gpu = disable_gpu
         self.page_load_strategy = page_load_strategy
@@ -27,7 +27,7 @@ class WebDriverManager:
                 chrome_options.add_argument("--disable-gpu")
                 logging.info("GPU disabled")
             if self.page_load_strategy:
-                chrome_options.page_load_strategy = 'eager'
+                chrome_options.page_load_strategy = self.page_load_strategy
                 logging.info("Page load strategy enabled")
             return chrome_options
         except Exception as e:
@@ -48,15 +48,15 @@ class WebDriverManager:
 
 
 if __name__ == "__main__":
-    manager = WebDriverManager(headless=True, disable_gpu=True, page_load_strategy='eager')
+    manager = WebDriverManager(headless=True, disable_gpu=True, page_load_strategy='normal')
     driver = manager.create_chromedriver()
 
     url_fetcher = UrlFetcher()
     base_url = url_fetcher.get_base_url()
 
     page_loader = PageFetcher(driver, base_url)
-    page_loader.load_page()
-    page_loader.print_page_content()
+    page_loader.load_sem_page("fall-2025")
+    page_loader.print_page_content("fall-2025")
 
 
 
