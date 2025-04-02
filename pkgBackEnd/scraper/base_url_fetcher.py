@@ -5,7 +5,7 @@ from pkgBackEnd.FileIO import url_reader
 
 #This class can eventually be used to read other URLs....
 
-class UrlFetcher:
+class BaseUrlFetcher:
     def __init__(self):
         self.base_url = None
 

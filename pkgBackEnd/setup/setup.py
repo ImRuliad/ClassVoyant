@@ -6,7 +6,8 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 from pkgBackEnd.scraper.get_page_content import PageFetcher
-from pkgBackEnd.scraper.get_url import UrlFetcher
+from pkgBackEnd.scraper.base_url_fetcher import BaseUrlFetcher
+from pkgBackEnd.scraper.semester_url_fetcher import SemesterUrlFetcher
 
 
 class WebDriverManager:
@@ -51,12 +52,22 @@ if __name__ == "__main__":
     manager = WebDriverManager(headless=True, disable_gpu=True, page_load_strategy='normal')
     driver = manager.create_chromedriver()
 
-    url_fetcher = UrlFetcher()
+    url_fetcher = BaseUrlFetcher()
     base_url = url_fetcher.get_base_url()
+    semester_url_fetcher = SemesterUrlFetcher(driver, base_url)
+    semester_urls = semester_url_fetcher.get_semester_urls()
 
-    page_loader = PageFetcher(driver, base_url)
-    page_loader.load_sem_page("fall-2025")
-    page_loader.print_page_content("fall-2025")
+    print(semester_urls)
+
+
+
+
+    #page_loader = PageFetcher(driver, base_url)
+    #page_loader.load_page()
+    #page_loader.print_base_page_content()
+
+
+    #page_loader.print_page_content("fall-2025")
 
 
 
