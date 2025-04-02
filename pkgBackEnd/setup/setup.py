@@ -1,11 +1,8 @@
 import logging
-import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-
-from pkgBackEnd.scraper.get_page_content import PageFetcher
 from pkgBackEnd.scraper.base_url_fetcher import BaseUrlFetcher
 from pkgBackEnd.scraper.semester_url_fetcher import SemesterUrlFetcher
 
@@ -58,17 +55,6 @@ if __name__ == "__main__":
     semester_urls = semester_url_fetcher.get_semester_urls()
 
     print(semester_urls)
-
-
-
-
-    #page_loader = PageFetcher(driver, base_url)
-    #page_loader.load_page()
-    #page_loader.print_base_page_content()
-
-
-    #page_loader.print_page_content("fall-2025")
-
 
 
 
