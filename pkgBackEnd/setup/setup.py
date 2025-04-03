@@ -59,7 +59,6 @@ if __name__ == "__main__":
     major_url_fetcher.get_major_urls(semester_urls[0])
 
 
-
 """
     url_fetcher = UrlContentFetcher()
     url_fetcher.set_webdriver(driver)

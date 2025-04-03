@@ -1,6 +1,9 @@
 import logging
+import pprint
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class MajorUrlFetcher:
@@ -13,18 +16,13 @@ class MajorUrlFetcher:
         if not semester_url:
             raise ValueError("Semester URL not provided")
 
+        self.webdriver.get(semester_url)
+        wait = WebDriverWait(self.webdriver, 5)
+        section_element = wait.until(EC.presence_of_all_elements_located((By.XPATH, "//section/div")))
 
-
-
-
-
-
-
-
-
-
-
-
+        for div_element in section_element:
+            outer_html = div_element.get_attribute('outerHTML')
+            print(outer_html)
 
 
 
