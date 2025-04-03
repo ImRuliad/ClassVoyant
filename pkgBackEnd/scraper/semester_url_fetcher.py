@@ -20,13 +20,13 @@ class SemesterUrlFetcher:
             self.webdriver.get(self.base_url)
             self.semester_urls = self.webdriver.find_elements(By.CSS_SELECTOR, '[aria-labelledby="article-head"] li a')
             for html_element in self.semester_urls:
-                self.save_semester_urls(html_element)
+                self._save_semester_urls(html_element)
             return self.list_of_sem_urls
         except Exception as e:
             logging.error(f"Error getting semester URLs: {e}")
             return
 
-    def save_semester_urls(self, html_element):
+    def _save_semester_urls(self, html_element):
         sem_url = html_element.get_attribute('href')
         self.list_of_sem_urls.append(sem_url)
 
