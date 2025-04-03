@@ -3,7 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-from pkgBackEnd.scraper.base_url_fetcher import BaseUrlFetcher
+from pkgBackEnd.configs import get_url_from_env
+from pkgBackEnd.scraper.major_url_fetcher import MajorUrlFetcher
 from pkgBackEnd.scraper.semester_url_fetcher import SemesterUrlFetcher
 
 
@@ -48,13 +49,16 @@ class WebDriverManager:
 if __name__ == "__main__":
     manager = WebDriverManager(headless=True, disable_gpu=True, page_load_strategy='normal')
     driver = manager.create_chromedriver()
+    base_url = get_url_from_env.base_url()
 
-    url_fetcher = BaseUrlFetcher()
-    base_url = url_fetcher.get_base_url()
+
+
     semester_url_fetcher = SemesterUrlFetcher(driver, base_url)
     semester_urls = semester_url_fetcher.get_semester_urls()
-
     print(semester_urls)
+
+    major_url_fetcher = MajorUrlFetcher(driver)
+    major_url_fetcher.get_major_urls(semester_urls[0])
 
 
 
