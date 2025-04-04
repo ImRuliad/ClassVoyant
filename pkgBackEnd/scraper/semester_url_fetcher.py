@@ -9,6 +9,7 @@ class SemesterUrlFetcher:
         self.base_url = base_url
         self.semester_urls = None
         self.list_of_sem_urls = []
+        self.semester_link_element = '[aria-labelledby="article-head"] li a'
 
     def _navigate_to_url(self):
         if not self.webdriver:
@@ -21,10 +22,17 @@ class SemesterUrlFetcher:
             logging.error(f"Error navigating to base_url: {self.base_url} ---> {e}")
             raise
 
+    def _find_semester_link_elements(self):
+        try:
+            return self.webdriver.find_elements(By.CSS_SELECTOR, self.semester_link_element)
+        except Exception as e:
+            logging.error(f"Unable to find semester link element: {self.semester_link_element} ---> {e}")
+
+
     def get_semester_urls(self):
         try:
             self._navigate_to_url()
-            self.semester_urls = self.webdriver.find_elements(By.CSS_SELECTOR, '[aria-labelledby="article-head"] li a')
+            self.semester_urls = self._find_semester_link_elements()
             self._save_semester_urls()
             return self.list_of_sem_urls
         except Exception as e:
