@@ -52,7 +52,8 @@ if __name__ == "__main__":
     base_url = get_url_from_env.base_url()
 
     semester_url_fetcher = SemesterUrlFetcher(driver, base_url)
-    semester_urls = semester_url_fetcher.get_semester_urls()
+    semester_urls: list = semester_url_fetcher.get_semester_urls()
+
     print(semester_urls)
 
     major_url_fetcher = MajorUrlFetcher(driver)

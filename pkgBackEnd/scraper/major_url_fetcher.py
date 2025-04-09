@@ -10,35 +10,28 @@ class MajorUrlFetcher:
     def __init__(self, webdriver):
         self.webdriver = webdriver
 
+    def _get_divs(self, semester_url):
+        self.webdriver.get(semester_url)
+        wait = WebDriverWait(self.webdriver, 5)
+        section_element = wait.until(EC.presence_of_all_elements_located((By.XPATH, "//section/div")))
+        return section_element
+
+    def _get_html_of_divs(self, semester_url):
+        div_element = self._get_divs(semester_url)
+
+        for element in div_element:
+            outer_html = element.get_attribute('outerHTML')
+            print(outer_html)
+
+
     def get_major_urls(self, semester_url):
         if not self.webdriver:
             raise ValueError("Webdriver not set!")
         if not semester_url:
             raise ValueError("Semester URL not provided")
-
-        self.webdriver.get(semester_url)
-        wait = WebDriverWait(self.webdriver, 5)
-        section_element = wait.until(EC.presence_of_all_elements_located((By.XPATH, "//section/div")))
-
-        for div_element in section_element:
-            outer_html = div_element.get_attribute('outerHTML')
-            print(outer_html)
+        self._get_divs(semester_url)
+        self._get_html_of_divs(semester_url)
 
 
 
-"""
-       try:
-            self.webdriver.get(semester_url)
-            html_elements = self.webdriver.find_elements(By.TAG_NAME, "div")
 
-
-            for element in html_elements:
-                element_content = element.get_attribute("textContent")
-                if element_content:
-                    print(element_content)
-
-        except Exception as e:
-            logging.error(f"Error extracting major API urls from {semester_url}: {e}")
-            raise
-
-"""
