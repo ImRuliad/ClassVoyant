@@ -53,11 +53,11 @@ if __name__ == "__main__":
 
     semester_url_fetcher = SemesterUrlFetcher(driver, base_url)
     semester_urls: list = semester_url_fetcher.get_semester_urls()
-
     print(semester_urls)
 
     major_url_fetcher = MajorUrlFetcher(driver, semester_urls)
-    major_url_fetcher.get_major_urls()
+    major_urls: list = major_url_fetcher.get_major_urls()
+    print(major_urls)
 
 
 """
