@@ -8,11 +8,20 @@ from bs4 import BeautifulSoup
 
 class MajorUrlFetcher:
     def __init__(self, webdriver, semester_urls):
-        self.webdriver = webdriver
         self.list_of_semesters = semester_urls
-        self.list_of_div_htmls = []
-        self.html_string = None
         self.list_of_major_urls = []
+        self.list_of_div_htmls = []
+        self.webdriver = webdriver
+        self.html_string = None
+        self._if_webdriver_sem_url_exists()
+
+    def _if_webdriver_sem_url_exists(self):
+        if not self.webdriver:
+            logging.error("Web driver not set")
+            raise ValueError("Web driver must be passed as an argument when instantiating MajorUrlFetcher")
+        if not self.list_of_semesters:
+            logging.error("Semester Urls not set")
+            raise ValueError("Semester Urls from SemesterUrlFetcher must be passed as an argument when instantiating MajorUrlFetcher")
 
     def _get_divs(self):
         self.webdriver.get(self.list_of_semesters[0])

@@ -10,12 +10,17 @@ class SemesterUrlFetcher:
         self.list_of_sem_urls = []
         self.semester_link_elements = None
         self.semester_link_element = '[aria-labelledby="article-head"] li a'
+        self._if_webdriver_base_url_exists()
+
+    def _if_webdriver_base_url_exists(self):
+        if not self.webdriver:
+            logging.error("Web driver not set")
+            raise ValueError("Web driver must be passed as an argument when instantiating SemesterUrlFetcher")
+        if not self.base_url:
+            logging.error("Base URL not set")
+            raise ValueError("Base URL from .env must be passed as an argument when instantiating SemesterUrlFetcher")
 
     def _navigate_to_url(self):
-        if not self.webdriver:
-            raise ValueError("Webdriver not set ")
-        if not self.base_url:
-            raise ValueError("Base URL not set")
         try:
             self.webdriver.get(self.base_url)
         except Exception as e:
@@ -32,7 +37,6 @@ class SemesterUrlFetcher:
         for html_element in self.semester_link_elements:
             semester_url = html_element.get_attribute('href')
             self.list_of_sem_urls.append(semester_url)
-
 
     def get_semester_urls(self):
         try:
