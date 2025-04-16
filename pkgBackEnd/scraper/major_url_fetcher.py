@@ -6,14 +6,19 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 
+from pkgBackEnd.configs import get_url_from_env
+
+
 class MajorUrlFetcher:
     def __init__(self, webdriver, semester):
+        self.webdriver = webdriver
         self.semester = semester
+        self._if_webdriver_sem_url_exists()
+        self._base_url = get_url_from_env.base_url()
+
         self.dict_of_major_urls = {}
         self.list_of_div_htmls = []
-        self.webdriver = webdriver
         self.html_string = None
-        self._if_webdriver_sem_url_exists()
 
     def _if_webdriver_sem_url_exists(self):
         if not self.webdriver:
@@ -43,10 +48,14 @@ class MajorUrlFetcher:
         for item in soup.find_all("a"):
             major_name = item.text.strip()
             major_url = item.get('href')
-            self._add_to_dict_major_urls(major_name, major_url)
+            full_url = self._join_base_and_major_url(major_url)
+            self._add_to_dict_major_urls(major_name, full_url)
 
-    def _add_to_dict_major_urls(self, major_name, major_url):
-        self.dict_of_major_urls[major_name] = major_url
+    def _join_base_and_major_url(self, major_url):
+        return self._base_url + major_url[15:]
+
+    def _add_to_dict_major_urls(self, major_name, full_url):
+        self.dict_of_major_urls[major_name] = full_url
 
     def get_major_urls(self):
         if not self.webdriver:
