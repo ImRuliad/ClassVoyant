@@ -42,7 +42,10 @@ class MajorUrlFetcher:
         soup = BeautifulSoup(self.html_string, 'html.parser')
         for item in soup.find_all("a"):
             major_url = item.get('href')
-            self.list_of_major_urls.append(major_url)
+            self._add_to_list_major_urls(major_url)
+
+    def _add_to_list_major_urls(self, major_url):
+        self.list_of_major_urls.append(major_url)
 
     def get_major_urls(self):
         if not self.webdriver:

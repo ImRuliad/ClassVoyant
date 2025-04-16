@@ -36,7 +36,10 @@ class SemesterUrlFetcher:
     def _extract_semester_urls_from_element(self):
         for html_element in self.semester_link_elements:
             semester_url = html_element.get_attribute('href')
-            self.list_of_sem_urls.append(semester_url)
+            self._add_to_list_of_sem_urls(semester_url)
+
+    def _add_to_list_of_sem_urls(self, semester_url):
+        self.list_of_sem_urls.append(semester_url)
 
     def get_semester_urls(self):
         try:
