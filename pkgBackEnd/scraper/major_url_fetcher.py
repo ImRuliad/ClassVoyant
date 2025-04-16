@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 class MajorUrlFetcher:
     def __init__(self, webdriver, semester_urls):
         self.list_of_semesters = semester_urls
-        self.list_of_major_urls = []
+        self.dict_of_major_urls = {}
         self.list_of_div_htmls = []
         self.webdriver = webdriver
         self.html_string = None
@@ -41,11 +41,12 @@ class MajorUrlFetcher:
     def _extract_href_from_div_html(self):
         soup = BeautifulSoup(self.html_string, 'html.parser')
         for item in soup.find_all("a"):
+            major_name = item.text.strip()
             major_url = item.get('href')
-            self._add_to_list_major_urls(major_url)
+            self._add_to_dict_major_urls(major_name, major_url)
 
-    def _add_to_list_major_urls(self, major_url):
-        self.list_of_major_urls.append(major_url)
+    def _add_to_dict_major_urls(self, major_name, major_url):
+        self.dict_of_major_urls[major_name] = major_url
 
     def get_major_urls(self):
         if not self.webdriver:
@@ -56,7 +57,7 @@ class MajorUrlFetcher:
         self._get_html_of_divs()
         self._combine_html_to_string()
         self._extract_href_from_div_html()
-        return self.list_of_major_urls
+        return self.dict_of_major_urls
 
 
 
