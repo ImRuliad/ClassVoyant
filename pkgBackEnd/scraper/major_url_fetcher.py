@@ -7,8 +7,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 
 class MajorUrlFetcher:
-    def __init__(self, webdriver, semester_urls):
-        self.list_of_semesters = semester_urls
+    def __init__(self, webdriver, semester):
+        self.semester = semester
         self.dict_of_major_urls = {}
         self.list_of_div_htmls = []
         self.webdriver = webdriver
@@ -19,12 +19,12 @@ class MajorUrlFetcher:
         if not self.webdriver:
             logging.error("Web driver not set")
             raise ValueError("Web driver must be passed as an argument when instantiating MajorUrlFetcher")
-        if not self.list_of_semesters:
-            logging.error("Semester Urls not set")
+        if not self.semester:
+            logging.error("Semester Url not set")
             raise ValueError("Semester Urls from SemesterUrlFetcher must be passed as an argument when instantiating MajorUrlFetcher")
 
     def _get_divs(self):
-        self.webdriver.get(self.list_of_semesters[0])
+        self.webdriver.get(self.semester)
         wait = WebDriverWait(self.webdriver, 5)
         section_element = wait.until(EC.presence_of_all_elements_located((By.XPATH, "//section/div")))
         return section_element
@@ -51,8 +51,8 @@ class MajorUrlFetcher:
     def get_major_urls(self):
         if not self.webdriver:
             raise ValueError("Webdriver not set!")
-        if not self.list_of_semesters:
-            raise ValueError("Semester URLs have not been provided")
+        if not self.semester:
+            raise ValueError("Semester has not been provided")
         self._get_divs()
         self._get_html_of_divs()
         self._combine_html_to_string()
