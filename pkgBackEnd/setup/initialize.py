@@ -48,14 +48,14 @@ class WebDriverManager:
 
 
 
-if __name__ == "__main__":
+def run_setup():
     manager = WebDriverManager(headless=True, disable_gpu=True, page_load_strategy='normal')
     driver = manager.create_chromedriver()
     base_url = get_url_from_env.base_url()
 
-    #semester_urls[0] = fall-2025
-    #semester_urls[1] = summer-2025
-    #semester_urls[2] = spring-2025
+        #semester_urls[0] = fall-2025
+        #semester_urls[1] = summer-2025
+        #semester_urls[2] = spring-2025
     semester_url_fetcher = SemesterUrlFetcher(driver, base_url)
     semester_urls: list = semester_url_fetcher.get_semester_urls()
     print(semester_urls)
