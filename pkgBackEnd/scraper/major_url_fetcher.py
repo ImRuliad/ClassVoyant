@@ -7,26 +7,20 @@ from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 
 from pkgBackEnd.configs import get_url_from_env
-
+from pkgBackEnd.utils import validators
 
 class MajorUrlFetcher:
-    def __init__(self, webdriver, semester):
+    def __init__(self, webdriver, semester_url):
         self.webdriver = webdriver
-        self.semester = semester
+        self.semester_url = semester_url
         self._if_webdriver_sem_url_exists()
         self._base_url = get_url_from_env.base_url()
 
         self.dict_of_major_urls = {}
         self.list_of_div_htmls = []
         self.html_string = None
-
-    def _if_webdriver_sem_url_exists(self):
-        if not self.webdriver:
-            logging.error("Web driver not set")
-            raise ValueError("Web driver must be passed as an argument when instantiating MajorUrlFetcher")
-        if not self.semester:
-            logging.error("Semester Url not set")
-            raise ValueError("Semester Urls from SemesterUrlFetcher must be passed as an argument when instantiating MajorUrlFetcher")
+        validators.webdriver_exists(self.webdriver)
+        validators.url_exists(self.semester_url)
 
     def _get_divs(self):
         self.webdriver.get(self.semester)
@@ -57,6 +51,7 @@ class MajorUrlFetcher:
     def _add_to_dict_major_urls(self, major_name, full_url):
         self.dict_of_major_urls[major_name] = full_url
 
+    #Implement error handling for obtaining majors
     def get_major_urls(self):
         if not self.webdriver:
             raise ValueError("Webdriver not set!")

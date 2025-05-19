@@ -1,5 +1,5 @@
 import logging
-
+from pkgBackEnd.utils import validators
 from selenium.webdriver.common.by import By
 
 
@@ -10,16 +10,9 @@ class SemesterUrlFetcher:
         self.list_of_sem_urls = []
         self.semester_link_elements = None
         self.semester_link_element = '[aria-labelledby="article-head"] li a'
-        self._if_webdriver_base_url_exists()
-
-    def _if_webdriver_base_url_exists(self):
-        if not self.webdriver:
-            logging.error("Web driver not set")
-            raise ValueError("Web driver must be passed as an argument when instantiating SemesterUrlFetcher")
-        if not self.base_url:
-            logging.error("Base URL not set")
-            raise ValueError("Base URL from .env must be passed as an argument when instantiating SemesterUrlFetcher")
-
+        validators.webdriver_exists(self.webdriver)
+        validators.url_exists(self.base_url)
+        
     def _navigate_to_url(self):
         try:
             self.webdriver.get(self.base_url)
@@ -50,8 +43,3 @@ class SemesterUrlFetcher:
         except Exception as e:
             logging.error(f"Error getting semester URLs: {e}")
             return
-
-
-
-
-

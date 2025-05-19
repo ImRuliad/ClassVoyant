@@ -8,6 +8,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from pkgBackEnd.configs import get_url_from_env
 from pkgBackEnd.scraper.major_url_fetcher import MajorUrlFetcher
 from pkgBackEnd.scraper.semester_url_fetcher import SemesterUrlFetcher
+from pkgBackEnd.scraper.course_fetcher import CourseFetcher
 
 
 class WebDriverManager:
@@ -60,9 +61,12 @@ def run_setup():
     semester_urls: list = semester_url_fetcher.get_semester_urls()
     print(semester_urls)
 
-    major_url_fetcher = MajorUrlFetcher(driver, semester_urls[2])
-    major_urls: dict = major_url_fetcher.get_major_urls()
-    pprint.pprint(major_urls)
+    #major_url_fetcher = MajorUrlFetcher(driver, semester_urls[2])
+    #major_urls: dict = major_url_fetcher.get_major_urls()
+    #pprint.pprint(major_urls)
+
+    #courses = CourseFetcher(driver, major_urls)
+    #courses.get_courses_data()
 
 
 """
