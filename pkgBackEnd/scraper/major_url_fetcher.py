@@ -13,9 +13,7 @@ class MajorUrlFetcher:
     def __init__(self, webdriver, semester_url):
         self.webdriver = webdriver
         self.semester_url = semester_url
-        self._if_webdriver_sem_url_exists()
         self._base_url = get_url_from_env.base_url()
-
         self.dict_of_major_urls = {}
         self.list_of_div_htmls = []
         self.html_string = None
@@ -23,7 +21,7 @@ class MajorUrlFetcher:
         validators.url_exists(self.semester_url)
 
     def _get_divs(self):
-        self.webdriver.get(self.semester)
+        self.webdriver.get(self.semester_url)
         wait = WebDriverWait(self.webdriver, 5)
         section_element = wait.until(EC.presence_of_all_elements_located((By.XPATH, "//section/div")))
         return section_element
@@ -53,10 +51,6 @@ class MajorUrlFetcher:
 
     #Implement error handling for obtaining majors
     def get_major_urls(self):
-        if not self.webdriver:
-            raise ValueError("Webdriver not set!")
-        if not self.semester:
-            raise ValueError("Semester has not been provided")
         self._get_divs()
         self._get_html_of_divs()
         self._combine_html_to_string()

@@ -1,6 +1,6 @@
 import logging
 import pprint
-
+import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
@@ -59,14 +59,13 @@ def run_setup():
         #semester_urls[2] = spring-2025
     semester_url_fetcher = SemesterUrlFetcher(driver, base_url)
     semester_urls: list = semester_url_fetcher.get_semester_urls()
-    print(semester_urls)
-
-    #major_url_fetcher = MajorUrlFetcher(driver, semester_urls[2])
-    #major_urls: dict = major_url_fetcher.get_major_urls()
+    time.sleep(5)
+    major_url_fetcher = MajorUrlFetcher(driver, semester_urls[2])
+    major_urls: dict = major_url_fetcher.get_major_urls()
     #pprint.pprint(major_urls)
 
-    #courses = CourseFetcher(driver, major_urls)
-    #courses.get_courses_data()
+    courses = CourseFetcher(driver, major_urls)
+    courses.test_get_courses_data()
 
 
 """
