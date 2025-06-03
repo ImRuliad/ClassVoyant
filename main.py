@@ -1,6 +1,5 @@
 from pkgBackEnd.setup.initialize import run_setup
 
-
 def main():
     run_setup()
 

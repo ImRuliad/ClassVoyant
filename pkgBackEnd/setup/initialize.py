@@ -65,7 +65,7 @@ def run_setup():
     #pprint.pprint(major_urls)
 
     courses = CourseFetcher(driver, major_urls)
-    courses.test_get_courses_data()
+    courses.get_courses_data()
 
 
 """
