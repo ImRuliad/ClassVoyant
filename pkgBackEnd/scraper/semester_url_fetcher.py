@@ -1,7 +1,5 @@
 import logging
-
 from selenium.webdriver.chrome.webdriver import WebDriver
-from pkgBackEnd.utils import validators
 from selenium.webdriver.common.by import By
 
 
@@ -12,10 +10,6 @@ class SemesterUrlFetcher:
         self._sem_urls: list = []
         self._sem_link_element: str = '[aria-labelledby="article-head"] li a'
         self._semester_link_elements = None
-        if not validators.webdriver_exists(self._webdriver):
-            logging.error(f"Webdriver does not exist in SemesterUrlFetcher class")
-        if not validators.url_exists(self._base_url):
-            logging.error(f"Base URL does not exist in SemesterUrlFetcher class")
 
         
     def _navigate_to_url(self):

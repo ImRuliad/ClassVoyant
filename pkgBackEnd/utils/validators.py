@@ -1,10 +1,17 @@
 import logging
-
 from selenium.webdriver.ie.webdriver import WebDriver
 
 
-def webdriver_exists(webdriver) -> WebDriver:
-    return webdriver is not None
+def validate_webdriver(webdriver) -> bool:
+    if webdriver is not None:
+        return True
+    else:
+        logging.error("webdriver is None.")
+        raise
 
-def url_exists(url: str) -> str:
-    return url is not None and url != ""
+def validate_url(url: str) -> bool:
+    if url is not None or url != "":
+        return True
+    else:
+        logging.error("Url is None or empty.")
+        raise

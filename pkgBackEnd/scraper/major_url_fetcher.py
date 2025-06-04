@@ -17,8 +17,6 @@ class MajorUrlFetcher:
         self._major_urls = {}
         self._div_htmls = []
         self._html_string = None
-        validators.webdriver_exists(self._webdriver)
-        validators.url_exists(self._semester_url)
 
     def _get_divs(self):
         self._webdriver.get(self._semester_url)
