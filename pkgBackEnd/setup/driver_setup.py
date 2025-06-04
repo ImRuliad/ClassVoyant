@@ -16,14 +16,14 @@ class WebDriverManager:
             chrome_options = Options()
             if self._headless:
                 chrome_options.add_argument("--headless")
-                logging.info("Headless enabled")
+
             if self._disable_gpu:
                 chrome_options.add_argument("--disable-gpu")
-                logging.info("GPU disabled")
+
             if self._page_load_strategy:
                 chrome_options.page_load_strategy = self._page_load_strategy
-                logging.info("Page load strategy enabled")
             return chrome_options
+
         except Exception as e:
             logging.error(f"Error occurred configuring options... {e}")
 
@@ -32,7 +32,6 @@ class WebDriverManager:
         try:
             service = Service(ChromeDriverManager().install())
             self._driver = webdriver.Chrome(service=service, options=options)
-            logging.info(f"Chrome driver created successfully")
             return self._driver
         except Exception as e:
             logging.error(f"Error occurred creating chromedriver... {e}")

@@ -5,14 +5,19 @@ from pkgBackEnd.scraper.semester_url_fetcher import SemesterUrlFetcher
 
 
 def begin_fetch(driver):
+    #obtains base_url from .env file
     base_url = get_url_from_env.base_url()
 
+    #creates object for fetching semester urls. Returns a list of semester URLs.
+    #semester_urls[0] = fall-2025 semester_urls[1] = summer-2025 semester_urls[2] = spring-2025
     semester_url_fetcher = SemesterUrlFetcher(driver, base_url)
     semester_urls: list = semester_url_fetcher.get_semester_urls()
 
-    # semester_urls[0] = fall-2025 semester_urls[1] = summer-2025 semester_urls[2] = spring-2025
+    #creates object for fetching major URLs based on their correlated semester URL.
+    #returns a dictionary of major URLs.
     major_url_fetcher = MajorUrlFetcher(driver, semester_urls[2])
     major_urls: dict = major_url_fetcher.get_major_urls()
 
+    #creates an object for fetching course data based off major URLs.
     courses = CourseFetcher(driver, major_urls)
     courses.get_courses_data()
