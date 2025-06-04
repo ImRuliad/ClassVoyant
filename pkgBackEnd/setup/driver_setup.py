@@ -16,14 +16,11 @@ class WebDriverManager:
             chrome_options = Options()
             if self._headless:
                 chrome_options.add_argument("--headless")
-
             if self._disable_gpu:
                 chrome_options.add_argument("--disable-gpu")
-
             if self._page_load_strategy:
                 chrome_options.page_load_strategy = self._page_load_strategy
             return chrome_options
-
         except Exception as e:
             logging.error(f"Error occurred configuring options... {e}")
 

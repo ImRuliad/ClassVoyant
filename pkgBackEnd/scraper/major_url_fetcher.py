@@ -11,18 +11,18 @@ from pkgBackEnd.utils import validators
 
 class MajorUrlFetcher:
     def __init__(self, webdriver, semester_url):
-        self.webdriver = webdriver
-        self.semester_url = semester_url
+        self._webdriver = webdriver
+        self._semester_url = semester_url
         self._base_url = get_url_from_env.base_url()
         self._major_urls = {}
         self._div_htmls = []
-        self.html_string = None
-        validators.webdriver_exists(self.webdriver)
-        validators.url_exists(self.semester_url)
+        self._html_string = None
+        validators.webdriver_exists(self._webdriver)
+        validators.url_exists(self._semester_url)
 
     def _get_divs(self):
-        self.webdriver.get(self.semester_url)
-        wait = WebDriverWait(self.webdriver, 5)
+        self._webdriver.get(self._semester_url)
+        wait = WebDriverWait(self._webdriver, 5)
         section_element = wait.until(EC.presence_of_all_elements_located((By.XPATH, "//section/div")))
         return section_element
 
@@ -33,10 +33,10 @@ class MajorUrlFetcher:
             self._div_htmls.append(outer_html)
 
     def _combine_html_to_string(self):
-        self.html_string = "".join(self._div_htmls)
+        self._html_string = "".join(self._div_htmls)
 
     def _extract_href_from_div_html(self):
-        soup = BeautifulSoup(self.html_string, 'html.parser')
+        soup = BeautifulSoup(self._html_string, 'html.parser')
         for item in soup.find_all("a"):
             major_name = item.text.strip()
             major_url = item.get('href')
