@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import pprint as pp
 import logging
 
 class CourseFetcher:
@@ -13,7 +12,7 @@ class CourseFetcher:
     def _set_webdriver_url(self, major_url: str) -> None:
         try:
             self.webdriver.get(major_url)
-        except Exception as e:
+        except Exception:
             logging.error(f"Unable to set webdriver url for {major_url}")
             raise
     

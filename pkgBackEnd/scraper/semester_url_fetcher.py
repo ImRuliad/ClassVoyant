@@ -1,17 +1,15 @@
 import logging
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
 
+from pkgBackEnd.scraper import html_extractors
 
 class SemesterUrlFetcher:
     def __init__(self, webdriver, base_url):
         self._webdriver: WebDriver = webdriver
         self._base_url: str = base_url
-        self._sem_urls: list = []
-        self._sem_link_element: str = '[aria-labelledby="article-head"] li a'
-        self._semester_link_elements = None
 
-        
     def _navigate_to_url(self):
         try:
             self._webdriver.get(self._base_url)
@@ -19,26 +17,21 @@ class SemesterUrlFetcher:
             logging.error(f"Error navigating to base_url: {self._base_url} ---> {e}")
             raise
 
-    def _find_semester_link_elements(self):
+    def _find_semester_link_elements(self) -> list[WebElement]:
+        sem_link_element: str = '[aria-labelledby="article-head"] li a'
         try:
-             self._semester_link_elements = self._webdriver.find_elements(By.CSS_SELECTOR, self._sem_link_element)
+            semester_link_elements = self._webdriver.find_elements(By.CSS_SELECTOR, sem_link_element)
+            return semester_link_elements
         except Exception as e:
-            logging.error(f"Unable to find semester link element: {self._sem_link_element} ---> {e}")
+            logging.error(f"Unable to find semester link element: {sem_link_element} ---> {e}")
+            return []
 
-    def _extract_semester_urls_from_element(self):
-        for html_element in self._semester_link_elements:
-            semester_url = html_element.get_attribute('href')
-            self._add_to_list_of_sem_urls(semester_url)
-
-    def _add_to_list_of_sem_urls(self, semester_url):
-        self._sem_urls.append(semester_url)
-
-    def get_semester_urls(self):
+    def get_semester_urls(self) -> list:
         try:
             self._navigate_to_url()
-            self._find_semester_link_elements()
-            self._extract_semester_urls_from_element()
-            return self._sem_urls
+            sem_url_elements = self._find_semester_link_elements()
+            sem_urls = html_extractors.extract_semester_urls_from_element(sem_url_elements)
+            return sem_urls
         except Exception as e:
             logging.error(f"Error getting semester URLs: {e}")
-            return
+            return []
