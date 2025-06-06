@@ -30,7 +30,7 @@ class SemesterUrlFetcher:
         try:
             self._navigate_to_url()
             sem_url_elements = self._find_semester_link_elements()
-            sem_urls = html_extractors.extract_semester_urls_from_element(sem_url_elements)
+            sem_urls = html_extractors.extract_hrefs_from_semester_link_elements(sem_url_elements)
             return sem_urls
         except Exception as e:
             logging.error(f"Error getting semester URLs: {e}")

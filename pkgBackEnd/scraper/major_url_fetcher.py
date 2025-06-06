@@ -24,8 +24,8 @@ class MajorUrlFetcher:
     # Implement error handling for obtaining majors
     def get_major_urls(self):
         divs = self._get_divs()
-        div_htmls = html_extractors.get_html_of_divs(divs)
-        html_string = html_extractors.combine_html_string(div_htmls)
-        major_urls = html_extractors.extract_href_from_div_html(html_string, self._base_url)
+        div_htmls = html_extractors.extract_outer_html_from_div_elements(divs)
+        html_string = html_extractors.join_div_html_into_string(div_htmls)
+        major_urls = html_extractors.parse_major_links_from_html(html_string, self._base_url)
         return major_urls
 
