@@ -26,23 +26,26 @@ class CourseFetcher:
         return soup
 
     def get_courses_data(self):
-        self._set_webdriver_url(self.major_urls['Economics'])
-        self._wait_for_html_element()
-        soup = self._set_html_element()
         course_content = {}
-
-        
-        table_divs = soup.select("div.table")
-        
-
-        for div in table_divs:
-            h2_tag = div.find("h2")
-            raw_title = h2_tag.get_text(strip=True)
-            course_code, course_title, course_units = (part.strip() for part in raw_title.split('-', 2))
-            print(course_code, course_title, course_units)
+        for major in self.major_urls:
+            self._set_webdriver_url(self.major_urls[major])
+            self._wait_for_html_element()
+            soup = self._set_html_element()
+            
+            table_divs = soup.select("div.table")
+            
+            for div in table_divs:
+                h2_tag = div.find("h2")
+                raw_title = h2_tag.get_text(strip=True)
+                course_code, course_title, course_units = (part.strip() for part in raw_title.split('-', 2))
+                print(course_code, course_title, course_units)
+                
+                course_content[course_code] = []
+                print(course_code)
+        pprint.pprint(course_content)
+            
 
         """
-
             course_content[course_title] = []
 
             rows = div.select('div[role="gridcell"]')
