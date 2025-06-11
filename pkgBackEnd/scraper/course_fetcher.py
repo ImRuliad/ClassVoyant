@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import logging
+import pprint
 
 class CourseFetcher:
     def __init__(self, webdriver, major_urls):
@@ -28,9 +29,21 @@ class CourseFetcher:
         self._set_webdriver_url(self.major_urls['Economics'])
         self._wait_for_html_element()
         soup = self._set_html_element()
+        
         table_divs = soup.select("div.table")
+        
 
         for div in table_divs:
-            h2_tag = div.find("h2")
-            print(h2_tag)
+            course_title = div.find("h2").get_text(strip=True)
+            course_desc = div.find("p").get_text(" ", strip=True)
+            print(f"{course_title}\n{course_desc}\n")
+
+            rows = div.select('div[role="gridcell"]')
+            for row in rows:
+                print(row.get_text(strip=True))
+
             
+
+
+
+
