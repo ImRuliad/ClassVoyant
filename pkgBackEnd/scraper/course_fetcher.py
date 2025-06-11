@@ -29,19 +29,28 @@ class CourseFetcher:
         self._set_webdriver_url(self.major_urls['Economics'])
         self._wait_for_html_element()
         soup = self._set_html_element()
+        course_content = {}
+
         
         table_divs = soup.select("div.table")
         
 
         for div in table_divs:
-            course_title = div.find("h2").get_text(strip=True)
-            course_desc = div.find("p").get_text(" ", strip=True)
-            print(f"{course_title}\n{course_desc}\n")
+            h2_tag = div.find("h2")
+            raw_title = h2_tag.get_text(strip=True)
+            course_code, course_title, course_units = (part.strip() for part in raw_title.split('-', 2))
+            print(course_code, course_title, course_units)
+
+        """
+
+            course_content[course_title] = []
 
             rows = div.select('div[role="gridcell"]')
             for row in rows:
                 print(row.get_text(strip=True))
 
+                course_content[course_title].append(row.get_text(strip=True))
+        """
             
 
 
