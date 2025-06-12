@@ -1,12 +1,11 @@
 from sqlalchemy import create_engine
-from sqlalchemy.testing.config import db_url
+from sqlalchemy.orm import sessionmaker, declarative_base
+
+DATABASE_URL = "sqlite:///my_database.db"
+engine = create_engine(DATABASE_URL, echo=True)
+SessionLocal = sessionmaker(bind=engine)
+Base = declarative_base()
 
 
-class Database:
-    def __init__(self):
-        self.db_url = "sqlite:///my_database.db"
-        self.engine = create_engine(db_url, echo=True) #create db engine and allow for logging.
-
-        
 
 
