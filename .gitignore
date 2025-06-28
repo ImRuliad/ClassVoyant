@@ -1,9 +1,15 @@
 API_ENDPOINT.txt
 
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyc
+*.pyd
+*.pyo
+*.pyw
+
 
 # C extensions
 *.so
