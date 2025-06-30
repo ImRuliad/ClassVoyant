@@ -13,6 +13,7 @@ class SemesterUrlFetcher:
     def _navigate_to_url(self):
         try:
             self._webdriver.get(self._base_url)
+            print(self._base_url)    #Debug statement
         except Exception as e:
             logging.error(f"Error navigating to base_url: {self._base_url} ---> {e}")
             raise
@@ -30,7 +31,9 @@ class SemesterUrlFetcher:
         try:
             self._navigate_to_url()
             sem_url_elements = self._find_semester_link_elements()
+            print(sem_url_elements)
             sem_urls = html_extractors.extract_hrefs_from_semester_link_elements(sem_url_elements)
+            print(sem_urls)
             return sem_urls
         except Exception as e:
             logging.error(f"Error getting semester URLs: {e}")

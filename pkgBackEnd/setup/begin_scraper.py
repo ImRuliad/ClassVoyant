@@ -3,18 +3,19 @@ from pkgBackEnd.scraper.course_fetcher import CourseFetcher
 from pkgBackEnd.scraper.major_url_fetcher import MajorUrlFetcher
 from pkgBackEnd.scraper.semester_url_fetcher import SemesterUrlFetcher
 from pkgBackEnd.utils.validators import validate_webdriver, validate_url
+from dotenv import load_dotenv
+import time
 
+def begin_fetch(driver, base_url):
 
-def begin_fetch(driver):
-    base_url = get_url_from_env.base_url()
-
-    validate_webdriver(driver)
-    validate_url(base_url)
+    validate_webdriver(driver)  #ensures a valid webdriver object has been created.
+    validate_url(base_url)      #ensures a valid base url has been obtained.
 
     semester_url_fetcher = SemesterUrlFetcher(driver, base_url)
     semester_urls: list = semester_url_fetcher.get_semester_urls()
-
     #semester_urls[0] = fall-2025 semester_urls[1] = summer-2025 semester_urls[2] = spring-2025
+    
+    print(semester_urls)
     major_url_fetcher = MajorUrlFetcher(driver, semester_urls[2])
     major_urls: dict = major_url_fetcher.get_major_urls()
 
