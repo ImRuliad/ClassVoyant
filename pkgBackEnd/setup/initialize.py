@@ -6,11 +6,11 @@ import os
 
 
 def run_setup():
-    manager = WebDriverManager(headless=True, disable_gpu=True, page_load_strategy="normal")
-    driver: WebDriver = manager.create_chromedriver()
     load_dotenv()
     base_url = os.getenv('BASE_URL')
-
+    
+    manager = WebDriverManager(headless=True, disable_gpu=True, page_load_strategy="normal")
+    driver: WebDriver = manager.create_chromedriver()
     try:
         begin_fetch(driver, base_url)
     finally:

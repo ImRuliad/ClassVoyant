@@ -18,7 +18,8 @@ class CourseFetcher:
             raise
     
     def _wait_for_html_element(self):
-        WebDriverWait(self.webdriver, 15).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.table")))
+        wait_time = 5
+        WebDriverWait(self.webdriver, wait_time).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.table")))
 
     def _set_html_element(self):
         html = self.webdriver.page_source            
@@ -26,7 +27,6 @@ class CourseFetcher:
         return soup
 
     def get_courses_data(self):
-        course_content = {}
         for major in self.major_urls:
             self._set_webdriver_url(self.major_urls[major])
             self._wait_for_html_element()
@@ -40,21 +40,6 @@ class CourseFetcher:
                 course_code, course_title, course_units = (part.strip() for part in raw_title.split('-', 2))
                 print(course_code, course_title, course_units)
                 
-                course_content[course_code] = []
-                print(course_code)
-        pprint.pprint(course_content)
-            
-
-        """
-            course_content[course_title] = []
-
-            rows = div.select('div[role="gridcell"]')
-            for row in rows:
-                print(row.get_text(strip=True))
-
-                course_content[course_title].append(row.get_text(strip=True))
-        """
-            
 
 
 

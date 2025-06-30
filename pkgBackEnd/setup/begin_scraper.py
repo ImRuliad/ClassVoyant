@@ -1,10 +1,8 @@
-from pkgBackEnd.configs import get_url_from_env
 from pkgBackEnd.scraper.course_fetcher import CourseFetcher
 from pkgBackEnd.scraper.major_url_fetcher import MajorUrlFetcher
 from pkgBackEnd.scraper.semester_url_fetcher import SemesterUrlFetcher
 from pkgBackEnd.utils.validators import validate_webdriver, validate_url
-from dotenv import load_dotenv
-import time
+import logging
 
 def begin_fetch(driver, base_url):
 
@@ -15,8 +13,11 @@ def begin_fetch(driver, base_url):
     semester_urls: list = semester_url_fetcher.get_semester_urls()
     #semester_urls[0] = fall-2025 semester_urls[1] = summer-2025 semester_urls[2] = spring-2025
     
-    print(semester_urls)
-    major_url_fetcher = MajorUrlFetcher(driver, semester_urls[2])
+    if len(semester_urls) < 3:
+        logging.error(f"Expected at least 3 semester URLs, but found {len(semester_urls)}. Cannot proceed to fetch major URLs.")
+        return
+
+    major_url_fetcher = MajorUrlFetcher(driver, semester_urls[2], base_url)
     major_urls: dict = major_url_fetcher.get_major_urls()
 
     #creates an object for fetching course data based off major URLs.
