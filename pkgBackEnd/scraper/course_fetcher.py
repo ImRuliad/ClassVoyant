@@ -3,13 +3,14 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from pkgBackEnd.utils.database_operations import save_course_to_database
+from pkgBackEnd.utils.database_operations import save_course_to_database, save_course_offerings_to_database
 import logging
 
 class CourseFetcher:
-    def __init__(self, webdriver, major_urls):
+    def __init__(self, webdriver, major_urls, semester_name):
         self.webdriver = webdriver
         self.major_urls: dict = major_urls
+        self.semester_name: str = semester_name
 
     def _set_webdriver_url(self, major_url: str) -> None:
         try:
@@ -45,6 +46,11 @@ class CourseFetcher:
                     course_units = match.group(3)
                     print(course_code, course_title, course_units[0])
                     save_course_to_database(course_code, course_title, int(course_units[0]))
+                    save_course_offerings_to_database(course_code, self.semester_name)
+
+
+
+
                 else:
                     logging.error(f"Unable to parse course title: {raw_title}")
                 

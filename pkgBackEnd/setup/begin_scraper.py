@@ -25,5 +25,5 @@ def begin_fetch(driver, base_url, semester_name: str):
     major_urls: dict = major_url_fetcher.get_major_urls()   #obtains urls for each major based on target semester url.
 
     #creates an object to fetch course data from major urls.
-    courses = CourseFetcher(driver, major_urls)
+    courses = CourseFetcher(driver, major_urls, semester_name)
     courses.get_courses_data()
