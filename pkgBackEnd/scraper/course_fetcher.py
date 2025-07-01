@@ -1,3 +1,4 @@
+import re
 from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -37,9 +38,15 @@ class CourseFetcher:
             for div in table_divs:
                 h2_tag = div.find("h2")
                 raw_title = h2_tag.get_text(strip=True)
-                course_code, course_title, course_units = (part.strip() for part in raw_title.split('-', 2))
-                print(course_code, course_title, course_units)
-                save_course_to_database(course_code, course_title, course_units)
+                match = re.match(r'^(.*?) - (.*?) - (\d+ Units)$', raw_title)
+                if match:
+                    course_code = match.group(1)
+                    course_title = match.group(2)
+                    course_units = match.group(3)
+                    print(course_code, course_title, course_units[0])
+                    save_course_to_database(course_code, course_title, int(course_units[0]))
+                else:
+                    logging.error(f"Unable to parse course title: {raw_title}")
                 
 
 
