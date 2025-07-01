@@ -5,6 +5,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pkgBackEnd.scraper import html_extractors
+from pkgBackEnd.utils.database_operations import save_semester_to_database
 
 class SemesterUrlFetcher:
     def __init__(self, webdriver, base_url):
@@ -40,11 +41,15 @@ class SemesterUrlFetcher:
     extracts semester url from its html elements.
     returns list of semester urls.
     """
-    def get_semester_urls(self) -> list:
+    def get_semester_urls(self) -> dict[str, str]:
         try:
             self._navigate_to_url()
             sem_url_elements = self._find_semester_link_elements()
             sem_urls = html_extractors.extract_hrefs_from_semester_link_elements(sem_url_elements)
+
+            for semester_name in sem_urls:
+                save_semester_to_database(semester_name)
+                
             return sem_urls
         except Exception as e:
             logging.error(f"Error getting semester URLs: {e}")
