@@ -2,8 +2,8 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from pkgBackEnd.utils.database_operations import save_course_to_database
 import logging
-import pprint
 
 class CourseFetcher:
     def __init__(self, webdriver, major_urls):
@@ -39,6 +39,7 @@ class CourseFetcher:
                 raw_title = h2_tag.get_text(strip=True)
                 course_code, course_title, course_units = (part.strip() for part in raw_title.split('-', 2))
                 print(course_code, course_title, course_units)
+                save_course_to_database(course_code, course_title, course_units)
                 
 
 
