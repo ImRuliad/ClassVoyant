@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 
-
-def extract_hrefs_from_semester_link_elements(semester_link_elements) -> list[str]:
+def extract_hrefs_from_semester_link_elements(semester_link_elements) -> dict[str, str]:
     sem_urls = {}
     for html_element in semester_link_elements:
         semester_name = html_element.text.strip()

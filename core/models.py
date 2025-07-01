@@ -9,3 +9,9 @@ class Course(models.Model):
 
     def __str__(self):
         return f"{self.course_id}: {self.course_title}"
+
+class Semester(models.Model):
+    semester_name = models.CharField(max_length=200, primary_key=True)
+
+    def __str__(self):
+        return f"{self.semester_name}"
