@@ -56,8 +56,8 @@ ALLOWED_HOSTS = [
 
 #cors settings for react development server.
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -71,6 +71,9 @@ CORS_ALLOW_METHODS = [
     "PUT",
 ]
 
+#configure rest framework to allow any permissions.
+#in development, we want to allow any permissions.
+#in production, we want to restrict permissions.
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
