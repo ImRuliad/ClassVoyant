@@ -47,10 +47,6 @@ class CourseFetcher:
                     print(course_code, course_title, course_units[0])
                     save_course_to_database(course_code, course_title, int(course_units[0]))
                     save_course_offerings_to_database(course_code, self.semester_name)
-
-
-
-
                 else:
                     logging.error(f"Unable to parse course title: {raw_title}")
                 

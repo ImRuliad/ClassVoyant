@@ -7,7 +7,7 @@
     <h1>All Courses</h1>
     <ul>
         {% for course in courses %}
-            <li>{{ course.course_id }}: {{ course.course_title }} ({{ course.units }} units)</li>
+            <li>{{ course.course_id }}: {{ course.course_title }}</li>
         {% empty %}
             <li>No courses found.</li>
         {% endfor %}

@@ -1,13 +1,12 @@
-from django.shortcuts import render
-from django.views.generic import ListView
+from rest_framework import viewsets
+from rest_framework.response import Response
 from .models import Course
+from .serializers import CourseSerializer
 # Create your views here.
 
 
-class CourseListView(ListView):
-    model = Course
-    template_name = 'core/courses.html'
-    context_object_name = 'courses'
-    ordering = ['course_id']
-
+class CourseViewSet(viewsets.ModelViewSet):
+    queryset = Course.objects.all().order_by('course_id')
+    serializer_class = CourseSerializer
+    
 
