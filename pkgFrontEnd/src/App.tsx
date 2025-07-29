@@ -8,7 +8,7 @@ function App() {
   const title = "ClassVoyant";
   const subtitle = "Pick your classes, get your schedule";
   const buttonText = "Find your classes";
-  const buttonLink = "http://localhost:8000/api/courses/";
+  const buttonLink = "http://localhost:8000/api/semesters/";
 
   return (
     <main className="relative min-h-screen w-full bg-black/[0.96] antialiased bg-grid-white/[0.02] overflow-hidden flex items-center justify-center">
@@ -25,7 +25,6 @@ function App() {
           </div>
       </div>
     </main>
-    
   );
 }
 
