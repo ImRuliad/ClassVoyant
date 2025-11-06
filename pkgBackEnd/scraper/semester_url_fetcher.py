@@ -53,4 +53,4 @@ class SemesterUrlFetcher:
             return sem_urls
         except Exception as e:
             logging.error(f"Error getting semester URLs: {e}")
-            return {}
+            return []

@@ -1,12 +1,11 @@
 from bs4 import BeautifulSoup
 
-def extract_hrefs_from_semester_link_elements(semester_link_elements) -> dict[str, str]:
-    sem_urls = {}
+
+def extract_hrefs_from_semester_link_elements(semester_link_elements) -> list[str]:
+    sem_urls = []
     for html_element in semester_link_elements:
-        semester_name = html_element.text.strip()
         semester_url = html_element.get_attribute("href")
-        if semester_name and semester_url:
-            sem_urls[semester_name] = semester_url
+        sem_urls.append(semester_url)
     return sem_urls
 
 def extract_outer_html_from_div_elements(divs) -> list[str]:
